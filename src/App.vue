@@ -187,6 +187,14 @@ h1 {
   border-radius: 0;
 }
 
+/**
+ * Keep the focused input on top
+ */
+.form-body:focus,
+.form-priority:focus {
+  z-index: 1;
+}
+
 .form-body {
   width: 100%;
   margin-right: -0.0625rem;
