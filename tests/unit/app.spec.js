@@ -56,7 +56,28 @@ describe('App.vue', () => {
 
   });
 
-  it.todo('can remove a todo');
+  it('can remove a todo', () => {
+    const count = 5;
+
+    const wrapper = mount(App, {
+      data() {
+        return {
+          list: makeTodoList(count),
+        }
+      }
+    });
+
+    // There should be count number of todos in the list
+    expect(wrapper.vm.list).toHaveLength(count);
+
+    // Remove a random item
+    const todo = faker.random.arrayElement(wrapper.vm.list);
+    wrapper.vm.remove(todo.id);
+
+    // The item should no longer be in the list
+    expect(wrapper.vm.list).toHaveLength(count - 1)
+    expect(wrapper.vm.list).not.toContainEqual(todo)
+  });
 
   it.todo('can clear all todos');
 

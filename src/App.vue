@@ -45,7 +45,9 @@ export default {
      *
      * @param {String} id the unique identifier of the item you want to remove
      */
-    remove(id) {},
+    remove(id) {
+      this.list = this.list.filter(todo => todo.id !== id);
+    },
 
     /**
      * Remove all todo items at once
