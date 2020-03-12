@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { v4 as uuid } from "uuid";
+
 const PRIORITIES = {
   1: "life changing",
   2: "important",
@@ -15,7 +17,7 @@ export default {
   name: "App",
   data() {
     return {
-      todoList: [],
+      list: [],
       form: {
         body: "",
         priority: PRIORITIES[3]
@@ -27,11 +29,16 @@ export default {
      * Add a new todo item to the list.
      *
      * @param {Object} todo
-     * @property {String} todo.id a unique identifier
-     * @property {String} todo.body describes what needs to be done
-     * @property {Number} todo.priority a priority, from 1 to 3
+     * @property {String} [todo.body] describes what needs to be done
+     * @property {Number} [todo.priority] a priority, from 1 to 3
      */
-    add(todo) {},
+    add({ body = "", priority = 3 }) {
+      this.list.push({
+        id: uuid(),
+        body,
+        priority
+      });
+    },
 
     /**
      * Remove a todo item
