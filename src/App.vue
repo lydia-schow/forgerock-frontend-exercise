@@ -60,6 +60,7 @@
 <script>
 import sortBy from "lodash/sortBy";
 import { v4 as uuid } from "uuid";
+import store from "store";
 
 export default {
   name: "App",
@@ -81,6 +82,21 @@ export default {
   computed: {
     sortedList() {
       return sortBy(this.list, todo => todo.priority);
+    }
+  },
+  mounted() {
+    // Load state from local storage if available
+    const storedList = store.get("list");
+    if (storedList != null && Array.isArray(storedList)) {
+      this.list = storedList;
+    }
+  },
+  watch: {
+    /**
+     * Save changes in local storage
+     */
+    list(value) {
+      store.set("list", value);
     }
   },
   methods: {
