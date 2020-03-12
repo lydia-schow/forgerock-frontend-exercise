@@ -3,7 +3,8 @@
     <h1>todos</h1>
     <ul class="todo-list">
       <li v-for="todo in list" :key="todo.id" class="todo-item">
-        {{ todo.body }}
+        <span>{{ todo.body }}</span>
+        <span class="priority">{{ priorityLabel(todo.priority) }}</span>
       </li>
     </ul>
   </div>
@@ -86,6 +87,16 @@ export default {
      */
     clear() {
       this.list = [];
+    },
+
+    /**
+     * Return the corresponding text for a priority number
+     *
+     * @param {Number} priority
+     * @return {String}
+     */
+    priorityLabel(priority) {
+      return PRIORITIES[priority];
     }
   }
 };
@@ -115,5 +126,20 @@ h1 {
   border: 0.0625rem solid #f5f5f5;
   padding: 1rem;
   margin-bottom: -0.0625rem;
+}
+
+.priority {
+  display: inline-block;
+  font-size: 75%; /* try to match the x-height of the body copy */
+  line-height: 1;
+  text-align: center;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  background: #f5f5f5;
+  padding: 0.25em 0.5em;
+  font-weight: bold;
+
+  /* MAYBE: consider separating margin into a utility class */
+  margin-left: 0.5rem;
 }
 </style>
