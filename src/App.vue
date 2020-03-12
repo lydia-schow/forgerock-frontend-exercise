@@ -7,7 +7,12 @@
           <span>{{ todo.body }}</span>
           <span class="priority">{{ priorityLabel(todo.priority) }}</span>
         </div>
-        <button type="button" class="todo-item-delete" alt="Delete item">
+        <button
+          type="button"
+          class="todo-item-delete"
+          alt="Delete item"
+          @click="remove(todo.id)"
+        >
           &times;
         </button>
       </li>
