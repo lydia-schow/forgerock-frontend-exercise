@@ -1,14 +1,37 @@
 <template>
   <div id="app">
+    <!-- Header -->
     <div class="space-between">
       <span>
         <!-- This empty span is neccesary for the layout to work correctly -->
       </span>
+      <!-- FIXME: the title isn't quite centered -->
       <h1>todos</h1>
       <button type="button" class="clear-button" @click="clear()">
         Clear All
       </button>
     </div>
+
+    <!-- Form -->
+    <form @submit="onSubmit">
+      <input
+        type="text"
+        class="form-body"
+        name="body"
+        autocomplete="off"
+        v-model="form.body"
+      />
+      <select class="form-priority" name="priority" v-model="form.priority">
+        <option
+          v-for="(label, key) in $options.priorities"
+          :key="key"
+          :value="key"
+          >{{ label }}</option
+        >
+      </select>
+    </form>
+
+    <!-- List -->
     <ul class="todo-list">
       <li v-for="todo in list" :key="todo.id" class="todo-item space-between">
         <div class="todo-item-body">
@@ -31,47 +54,20 @@
 <script>
 import { v4 as uuid } from "uuid";
 
-import faker from "faker";
-
-/**
- * Generate a single todo item
- */
-const makeTodo = () => ({
-  id: uuid(),
-  body: faker.random.words(6),
-  priority: faker.random.arrayElement([1, 2, 3])
-});
-
-/**
- * Generate a list of todo items
- *
- * @param {Number} count the number of items to create
- * @return {Array} an array of todo items
- */
-const makeTodoList = (count = 5) => {
-  const list = [];
-
-  for (let i = 0; i < count; i++) {
-    list.push(makeTodo());
-  }
-
-  return list;
-};
-
-const PRIORITIES = {
-  1: "life changing",
-  2: "important",
-  3: "meh"
-};
-
 export default {
   name: "App",
+  priorities: {
+    1: "life changing",
+    2: "important",
+    3: "meh"
+  },
+  defaultPriority: 3,
   data() {
     return {
-      list: makeTodoList(5),
+      list: [],
       form: {
         body: "",
-        priority: PRIORITIES[3]
+        priority: this.$options.defaultPriority
       }
     };
   },
@@ -83,7 +79,7 @@ export default {
      * @property {String} [todo.body] describes what needs to be done
      * @property {Number} [todo.priority] a priority, from 1 to 3
      */
-    add({ body = "", priority = 3 }) {
+    add({ body = "", priority = this.$options.defaultPriority }) {
       this.list.push({
         id: uuid(),
         body,
@@ -114,7 +110,28 @@ export default {
      * @return {String}
      */
     priorityLabel(priority) {
-      return PRIORITIES[priority];
+      return this.$options.priorities[priority];
+    },
+
+    /**
+     * Handle the form's submit event
+     */
+    onSubmit(event) {
+      // Stop the page from refreshing
+      event.preventDefault();
+
+      // Validate the form
+      if (this.form.body == null || this.form.body === "") {
+        // Do nothing
+        return;
+      }
+      // TODO: validate priority
+
+      // WARNING: priority being a string might cause issues down stream
+      this.add(this.form);
+
+      // Reset the form
+      this.form.body = "";
     }
   }
 };
