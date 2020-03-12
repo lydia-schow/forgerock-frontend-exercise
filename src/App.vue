@@ -3,8 +3,13 @@
     <h1>todos</h1>
     <ul class="todo-list">
       <li v-for="todo in list" :key="todo.id" class="todo-item">
-        <span>{{ todo.body }}</span>
-        <span class="priority">{{ priorityLabel(todo.priority) }}</span>
+        <div class="todo-item-body">
+          <span>{{ todo.body }}</span>
+          <span class="priority">{{ priorityLabel(todo.priority) }}</span>
+        </div>
+        <button type="button" class="todo-item-delete" alt="Delete item">
+          &times;
+        </button>
       </li>
     </ul>
   </div>
@@ -124,8 +129,42 @@ h1 {
 
 .todo-item {
   border: 0.0625rem solid #f5f5f5;
-  padding: 1rem;
   margin-bottom: -0.0625rem;
+
+  /* MAYBE: move the flexbox attributes to a utility class */
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo-item-body {
+  padding: 1rem;
+}
+
+.todo-item-delete {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  color: #ccc;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1.5rem;
+  line-height: 1;
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  transition: color 0.15s ease-in-out;
+  user-select: none;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  /* TODO: shift baseline up so the X is exactly in the middle */
+}
+
+.todo-item-delete:hover {
+  color: #2c3e50;
 }
 
 .priority {
