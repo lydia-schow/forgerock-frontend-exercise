@@ -12,48 +12,54 @@
       </button>
     </div>
 
-    <!-- Form -->
-    <form @submit="onSubmit" class="space-between">
-      <label for="form-body" class="sr-only">What needs to be done?</label>
-      <input
-        type="text"
-        class="form-body"
-        id="form-body"
-        autocomplete="off"
-        autofocus
-        v-model="form.body"
-      />
-      <select class="form-priority" id="form-priority" v-model="form.priority">
-        <option
-          v-for="(label, key) in $options.priorities"
-          :key="key"
-          :value="key"
-          >{{ label }}</option
+    <div class="todo-container">
+      <!-- Form -->
+      <form @submit="onSubmit" class="space-between">
+        <label for="form-body" class="sr-only">What needs to be done?</label>
+        <input
+          type="text"
+          class="form-body"
+          id="form-body"
+          autocomplete="off"
+          autofocus
+          v-model="form.body"
+        />
+        <select
+          class="form-priority"
+          id="form-priority"
+          v-model="form.priority"
         >
-      </select>
-    </form>
+          <option
+            v-for="(label, key) in $options.priorities"
+            :key="key"
+            :value="key"
+            >{{ label }}</option
+          >
+        </select>
+      </form>
 
-    <!-- List -->
-    <ul class="todo-list">
-      <li
-        v-for="todo in sortedList"
-        :key="todo.id"
-        class="todo-item space-between"
-      >
-        <div class="todo-item-body">
-          <span>{{ todo.body }}</span>
-          <span class="priority">{{ priorityLabel(todo.priority) }}</span>
-        </div>
-        <button
-          type="button"
-          class="todo-item-delete"
-          alt="Delete item"
-          @click="remove(todo.id)"
+      <!-- List -->
+      <ul class="todo-list">
+        <li
+          v-for="todo in sortedList"
+          :key="todo.id"
+          class="todo-item space-between"
         >
-          &times;
-        </button>
-      </li>
-    </ul>
+          <div class="todo-item-body">
+            <span>{{ todo.body }}</span>
+            <span class="priority">{{ priorityLabel(todo.priority) }}</span>
+          </div>
+          <button
+            type="button"
+            class="todo-item-delete"
+            alt="Delete item"
+            @click="remove(todo.id)"
+          >
+            &times;
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -177,6 +183,10 @@ export default {
 
 h1 {
   text-align: center;
+}
+
+.todo-container {
+  box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.01);
 }
 
 .form-body,
