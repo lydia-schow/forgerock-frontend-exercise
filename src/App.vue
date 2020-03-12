@@ -13,15 +13,17 @@
     </div>
 
     <!-- Form -->
-    <form @submit="onSubmit">
+    <form @submit="onSubmit" class="space-between">
+      <label for="form-body" class="sr-only">What needs to be done?</label>
       <input
         type="text"
         class="form-body"
-        name="body"
+        id="form-body"
         autocomplete="off"
+        autofocus
         v-model="form.body"
       />
-      <select class="form-priority" name="priority" v-model="form.priority">
+      <select class="form-priority" id="form-priority" v-model="form.priority">
         <option
           v-for="(label, key) in $options.priorities"
           :key="key"
@@ -151,6 +153,40 @@ h1 {
   text-align: center;
 }
 
+.form-body,
+.form-priority {
+  border: 0.0625rem solid #eee;
+  padding: 1rem;
+  margin-bottom: -0.0625rem;
+  border-radius: 0;
+}
+
+.form-body {
+  width: 100%;
+  margin-right: -0.0625rem;
+}
+
+.form-priority {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background-color: #fff;
+  display: block;
+  box-sizing: border-box;
+  box-shadow: none;
+  padding-right: 1.75rem;
+
+  /** Caret from Bootstrap 4 https://getbootstrap.com/docs/4.0/components/input-group/#custom-select*/
+  background: #fff
+    url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
+    no-repeat right 0.75rem center;
+  background-size: 8px 10px;
+}
+
+.form-priority::-ms-expand {
+  display: none;
+}
+
 .todo-list {
   list-style: none;
   margin: 0;
@@ -176,7 +212,7 @@ h1 {
   font-size: 1.5rem;
   line-height: 1;
   margin: 0;
-  padding: 1rem;
+  padding: 0 1rem;
   text-align: center;
   text-transform: uppercase;
   transition: color 0.15s ease-in-out;
@@ -246,5 +282,17 @@ h1 {
 
 .clear-button:hover {
   text-decoration: underline;
+}
+
+/** See Bootstrap 4 or https://www.w3.org/WAI/tutorials/forms/labels/ */
+.sr-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }
 </style>
