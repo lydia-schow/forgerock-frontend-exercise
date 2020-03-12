@@ -1,8 +1,16 @@
 <template>
   <div id="app">
-    <h1>todos</h1>
+    <div class="space-between">
+      <span>
+        <!-- This empty span is neccesary for the layout to work correctly -->
+      </span>
+      <h1>todos</h1>
+      <button type="button" class="clear-button" @click="clear()">
+        Clear All
+      </button>
+    </div>
     <ul class="todo-list">
-      <li v-for="todo in list" :key="todo.id" class="todo-item">
+      <li v-for="todo in list" :key="todo.id" class="todo-item space-between">
         <div class="todo-item-body">
           <span>{{ todo.body }}</span>
           <span class="priority">{{ priorityLabel(todo.priority) }}</span>
@@ -135,10 +143,6 @@ h1 {
 .todo-item {
   border: 0.0625rem solid #f5f5f5;
   margin-bottom: -0.0625rem;
-
-  /* MAYBE: move the flexbox attributes to a utility class */
-  display: flex;
-  justify-content: space-between;
 }
 
 .todo-item-body {
@@ -185,5 +189,45 @@ h1 {
 
   /* MAYBE: consider separating margin into a utility class */
   margin-left: 0.5rem;
+}
+
+/**
+ * Display elements side-by side.
+ *
+ * See https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+ */
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.clear-button {
+  /** TODO: abstract common button attributes into a `button` or `btn` class */
+  display: inline-block;
+  font-weight: 400;
+  color: #2c3e50;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 0.0625rem solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  border-radius: 0.25rem;
+  cursor: pointer;
+
+  font-weight: 400;
+  color: #3490dc;
+  text-decoration: none;
+
+  margin: 1.5rem 0;
+}
+
+.clear-button:hover {
+  text-decoration: underline;
 }
 </style>
