@@ -1,11 +1,43 @@
 <template>
   <div id="app">
     <h1>todos</h1>
+    <ul class="todo-list">
+      <li v-for="todo in list" :key="todo.id" class="todo-item">
+        {{ todo.body }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import { v4 as uuid } from "uuid";
+
+import faker from "faker";
+
+/**
+ * Generate a single todo item
+ */
+const makeTodo = () => ({
+  id: uuid(),
+  body: faker.random.words(6),
+  priority: faker.random.arrayElement([1, 2, 3])
+});
+
+/**
+ * Generate a list of todo items
+ *
+ * @param {Number} count the number of items to create
+ * @return {Array} an array of todo items
+ */
+const makeTodoList = (count = 5) => {
+  const list = [];
+
+  for (let i = 0; i < count; i++) {
+    list.push(makeTodo());
+  }
+
+  return list;
+};
 
 const PRIORITIES = {
   1: "life changing",
@@ -17,7 +49,7 @@ export default {
   name: "App",
   data() {
     return {
-      list: [],
+      list: makeTodoList(5),
       form: {
         body: "",
         priority: PRIORITIES[3]
@@ -64,8 +96,24 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 3.75rem auto 0;
+  max-width: 35rem;
+}
+
+h1 {
+  text-align: center;
+}
+
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.todo-item {
+  border: 0.0625rem solid #f5f5f5;
+  padding: 1rem;
+  margin-bottom: -0.0625rem;
 }
 </style>
