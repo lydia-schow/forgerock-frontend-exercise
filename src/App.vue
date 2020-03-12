@@ -35,7 +35,11 @@
 
     <!-- List -->
     <ul class="todo-list">
-      <li v-for="todo in list" :key="todo.id" class="todo-item space-between">
+      <li
+        v-for="todo in sortedList"
+        :key="todo.id"
+        class="todo-item space-between"
+      >
         <div class="todo-item-body">
           <span>{{ todo.body }}</span>
           <span class="priority">{{ priorityLabel(todo.priority) }}</span>
@@ -54,6 +58,7 @@
 </template>
 
 <script>
+import sortBy from "lodash/sortBy";
 import { v4 as uuid } from "uuid";
 
 export default {
@@ -72,6 +77,11 @@ export default {
         priority: this.$options.defaultPriority
       }
     };
+  },
+  computed: {
+    sortedList() {
+      return sortBy(this.list, todo => todo.priority);
+    }
   },
   methods: {
     /**
