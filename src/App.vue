@@ -52,7 +52,9 @@ export default {
     /**
      * Remove all todo items at once
      */
-    clear() {}
+    clear() {
+      this.list = [];
+    }
   }
 };
 </script>

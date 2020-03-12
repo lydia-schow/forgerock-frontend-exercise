@@ -79,6 +79,26 @@ describe('App.vue', () => {
     expect(wrapper.vm.list).not.toContainEqual(todo)
   });
 
-  it.todo('can clear all todos');
+  it('can clear all todos', () => {
+    const count = 5;
+
+    const wrapper = mount(App, {
+      data() {
+        return {
+          list: makeTodoList(count),
+        }
+      }
+    });
+
+    // There should be count number of todos in the list
+    expect(wrapper.vm.list).toHaveLength(count);
+
+    // Remove all todos
+    wrapper.vm.clear();
+
+    // There should be no todos anymore
+    expect(wrapper.vm.list).toHaveLength(0)
+
+  });
 
 })
