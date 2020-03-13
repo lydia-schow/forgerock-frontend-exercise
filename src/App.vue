@@ -100,6 +100,8 @@ export default {
   watch: {
     /**
      * Save changes in local storage
+     *
+     * @param {Array} value an array of todo items
      */
     list(value) {
       store.set("list", value);
@@ -149,6 +151,9 @@ export default {
 
     /**
      * Handle the form's submit event
+     *
+     * @param {Object} event Vue event object
+     * @see https://vuejs.org/v2/guide/events.html
      */
     onSubmit(event) {
       // Stop the page from refreshing
@@ -220,7 +225,10 @@ h1 {
   box-shadow: none;
   padding-right: 1.75rem;
 
-  /** Caret from Bootstrap 4 https://getbootstrap.com/docs/4.0/components/input-group/#custom-select*/
+  /**
+   * Caret from Bootstrap 4
+   * https://getbootstrap.com/docs/4.0/components/input-group/#custom-select
+   */
   background: #fff
     url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
     no-repeat right 0.75rem center;
